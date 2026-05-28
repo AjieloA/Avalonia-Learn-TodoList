@@ -1,0 +1,65 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Todooo.ViewModels"
+             xmlns:views="clr-namespace:Todooo.Views"
+             mc:Ignorable="d" d:DesignWidth="270" d:DesignHeight="480"
+             x:Class="Todooo.Views.MainView"
+             x:DataType="vm:MainViewModel">
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainViewModel />
+    </Design.DataContext>
+    <Grid RowDefinitions="18* 2*">
+        <!-- 标题 -->
+        <!-- <Border Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"> -->
+        <!--     <Label Content="{Binding MainTitleTxt}" FontWeight="Bold"> -->
+        <!--         <Label.Effect> -->
+        <!--             <DropShadowEffect OffsetX="3" OffsetY="3" -->
+        <!--                               BlurRadius="5" Color="Black" Opacity="0.5" /> -->
+        <!--         </Label.Effect> -->
+        <!--     </Label> -->
+        <!-- </Border> -->
+        <!-- 中间内容 -->
+        <ListBox Grid.Row="0" ItemsSource="{Binding TodoListItem}" SelectedItem="{Binding SelectTodoListItem}"
+                 SelectionMode="Single" Margin="10" Padding="0">
+            <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                    <Setter Property="Padding" Value="5" />
+                    <Setter Property="MinHeight" Value="50" />
+                    <Setter Property="MaxHeight" Value="100" />
+                </Style>
+            </ListBox.Styles>
+            <ListBox.DataTemplates>
+                <DataTemplate x:DataType="vm:TodoListItemViewModel">
+                    <views:TodoListItemView />
+                </DataTemplate>
+            </ListBox.DataTemplates>
+        </ListBox>
+        <!-- 底部操作按钮 -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*,*" VerticalAlignment="Center">
+            <Grid.Styles>
+                <Style Selector="Button">
+                    <Setter Property="Padding" Value="0"></Setter>
+                </Style>
+            </Grid.Styles>
+            <Button Grid.Column="0" HorizontalAlignment="Left" Margin="10 2 0 2 ">
+                <Button.Content>
+                    <Svg Path="/Assets/settingsBtn.svg" />
+                </Button.Content>
+            </Button>
+            <Button Grid.Column="1" HorizontalAlignment="Center" Margin="0 2 0 2 ">
+                <Button.Content>
+                    <Svg Path="/Assets/mainBtn.svg" />
+                </Button.Content>
+            </Button>
+            <Button Grid.Column="2" HorizontalAlignment="Right" Margin="0 2 10 2 ">
+                <Button.Content>
+                    <Svg Path="/Assets/addBtn.svg" />
+                </Button.Content>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>
