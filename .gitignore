@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+**/.idea/
+*.DotSettings.user
+**/.vs/
+*.user
+*.suo
+*.cache
+*.log
+basic/publish-win
+.deepseek
+**/.vscode
