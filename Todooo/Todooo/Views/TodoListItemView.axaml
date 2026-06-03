@@ -11,7 +11,7 @@
             <Image Grid.Column="0"
                    Height="50"
                    Width="50"
-                   Stretch="UniformToFill"
+                   Stretch="Uniform"
                    Source="{Binding Image}">
             </Image>
             <Border Grid.Column="1" Padding="8,4">
