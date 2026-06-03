@@ -8,7 +8,12 @@
              x:DataType="vm:TodoListItemViewModel">
     <Border CornerRadius="5" Background="Beige">
         <Grid ColumnDefinitions="Auto *">
-            <Rectangle Grid.Column="0" Width="50" Fill="CornflowerBlue"></Rectangle>
+            <Image Grid.Column="0"
+                   Height="50"
+                   Width="50"
+                   Stretch="UniformToFill"
+                   Source="{Binding Image}">
+            </Image>
             <Border Grid.Column="1" Padding="8,4">
                 <Grid RowDefinitions="Auto,*">
                     <!-- 标题行：固定高度 -->
