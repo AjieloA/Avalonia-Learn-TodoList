@@ -1,12 +1,15 @@
+using System;
+using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Todooo.ViewModels;
 
 namespace Todooo.Views;
 
 public partial class TodoListItemView : UserControl
 {
+    private CancellationTokenSource? _cts;
+
     public TodoListItemView()
     {
         InitializeComponent();
@@ -17,7 +20,16 @@ public partial class TodoListItemView : UserControl
         base.OnAttachedToVisualTree(e);
         if (DataContext is TodoListItemViewModel vm)
         {
-            _ = vm.TryLoadImageAsync();
+            _cts = new CancellationTokenSource();
+            _ = vm.TryLoadImageAsync(_cts.Token);
         }
+    }
+
+    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnDetachedFromVisualTree(e);
+        _cts?.Cancel();
+        _cts?.Dispose();
+        _cts = null;
     }
 }

@@ -19,6 +19,7 @@ public partial class MainViewModel : ViewModelBase
         { 4, "https://picture-new.88dog.com/x615b0rt1699269295.png" },
         { 5, "https://picture-new.88dog.com/kw36kgsy1699268926.png" },
         { 6, "https://picture-new.88dog.com/anc2a12c1699269136.png" },
+        { 7, "https://picture-new.88dog.com/drqm3lgd1779689146.jpg" }
     };
 
     public MainViewModel()
@@ -26,7 +27,7 @@ public partial class MainViewModel : ViewModelBase
         var _random = new Random();
         for (int i = 0; i < 100000; i++)
         {
-            var _idx = _random.Next(1, 7);
+            var _idx = _random.Next(1, 8);
             if (!imgDic.TryGetValue(_idx, out string _url))
                 _url = "https://picture-new.88dog.com/avatar.png";
             TodoListItem?.Add(new TodoListItemViewModel()

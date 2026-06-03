@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
@@ -15,7 +16,7 @@ public partial class TodoListItemViewModel : ViewModelBase
 
     private int _imageLoaded;
 
-    public async Task TryLoadImageAsync()
+    public async Task TryLoadImageAsync(CancellationToken ct = default)
     {
         // 只加载一次；Interlocked 保证多线程安全
         if (Interlocked.Exchange(ref _imageLoaded, 1) == 1)
@@ -26,7 +27,12 @@ public partial class TodoListItemViewModel : ViewModelBase
 
         try
         {
-            Image = await ImageCache.GetOrDownloadAsync(url);
+            Image = await ImageCache.GetOrDownloadAsync(url, ct);
+        }
+        catch (OperationCanceledException)
+        {
+            // 取消时复位标记，下次 attach 可重新加载
+            _imageLoaded = 0;
         }
         catch
         {
