@@ -13,16 +13,6 @@
         <vm:MainViewModel />
     </Design.DataContext>
     <Grid RowDefinitions="18* 2*">
-        <!-- 标题 -->
-        <!-- <Border Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"> -->
-        <!--     <Label Content="{Binding MainTitleTxt}" FontWeight="Bold"> -->
-        <!--         <Label.Effect> -->
-        <!--             <DropShadowEffect OffsetX="3" OffsetY="3" -->
-        <!--                               BlurRadius="5" Color="Black" Opacity="0.5" /> -->
-        <!--         </Label.Effect> -->
-        <!--     </Label> -->
-        <!-- </Border> -->
-        <!-- 中间内容 -->
         <ListBox Grid.Row="0" ItemsSource="{Binding TodoListItem}" SelectedItem="{Binding SelectTodoListItem}"
                  SelectionMode="Single" Margin="10" Padding="0">
             <ListBox.Styles>
@@ -30,6 +20,9 @@
                     <Setter Property="Padding" Value="5" />
                     <Setter Property="MinHeight" Value="50" />
                     <Setter Property="MaxHeight" Value="100" />
+                </Style>
+                <Style Selector="ListBoxItem:selected /template/ContentPresenter">
+                    <Setter Property="Background" Value="Transparent"></Setter>
                 </Style>
             </ListBox.Styles>
             <ListBox.DataTemplates>

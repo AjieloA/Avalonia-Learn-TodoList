@@ -26,7 +26,8 @@
                         <ToggleButton Grid.Column="1"
                                       HorizontalAlignment="Right"
                                       Height="20"
-                                      Margin="8,0,0,0" />
+                                      Margin="8,0,0,0"
+                                      IsChecked="{Binding $parent[ListBoxItem].IsSelected}" />
                     </Grid>
                     <!-- 描述行：占剩余空间，溢出时滚动 -->
                     <ScrollViewer Grid.Row="1"
