@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-ios</TargetFramework>
+    <IsBindingProject>true</IsBindingProject>
+    <Nullable>enable</Nullable>
+    <WechatOpenSdkPath>Native/WechatOpenSDK.xcframework</WechatOpenSdkPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
+    <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('$(WechatOpenSdkPath)')">
+    <NativeReference Include="$(WechatOpenSdkPath)">
+      <Kind>Framework</Kind>
+      <ForceLoad>true</ForceLoad>
+      <SmartLink>true</SmartLink>
+    </NativeReference>
+  </ItemGroup>
+
+  <Target Name="ValidateWechatOpenSdk" BeforeTargets="Build" Condition="!Exists('$(WechatOpenSdkPath)') and '$(AllowMissingWechatOpenSdkForCompile)' != 'true'">
+    <Error Text="Missing WechatOpenSDK.xcframework. Put the official WeChat iOS OpenSDK at Todooo.Wechat.iOS.Binding/Native/WechatOpenSDK.xcframework before building the iOS app." />
+  </Target>
+</Project>

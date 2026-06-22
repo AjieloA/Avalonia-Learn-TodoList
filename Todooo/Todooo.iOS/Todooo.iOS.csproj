@@ -4,6 +4,7 @@
         <TargetFramework>net10.0-ios</TargetFramework>
         <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
         <Nullable>enable</Nullable>
+        <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,5 +13,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Todooo\Todooo.csproj"/>
+        <ProjectReference Include="..\Todooo.Wechat.iOS.Binding\Todooo.Wechat.iOS.Binding.csproj"/>
     </ItemGroup>
 </Project>

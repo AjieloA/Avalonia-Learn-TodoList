@@ -5,13 +5,29 @@
 	<key>CFBundleDisplayName</key>
 	<string>Todooo</string>
 	<key>CFBundleIdentifier</key>
-	<string>companyName.Todooo</string>
+	<string>com.mds.dogshop</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>wechat</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wxa5a23ce9d4a7b8b7</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>weixin</string>
+		<string>weixinULAPI</string>
+	</array>
 	<key>MinimumOSVersion</key>
 	<string>13.0</string>
 	<key>UIDeviceFamily</key>

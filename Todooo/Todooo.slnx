@@ -7,5 +7,6 @@
   <Project Path="Todooo.iOS/Todooo.iOS.csproj">
     <Deploy />
   </Project>
+  <Project Path="Todooo.Wechat.iOS.Binding/Todooo.Wechat.iOS.Binding.csproj" />
   <Project Path="Todooo/Todooo.csproj" />
 </Solution>
