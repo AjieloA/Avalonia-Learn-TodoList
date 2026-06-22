@@ -13,6 +13,7 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty] private string _mainTitleTxt = "Todoooo";
     public ObservableCollection<TodoListItemViewModel>? TodoListItem { get; } = new();
     [ObservableProperty] private TodoListItemViewModel? _selectTodoListItem;
+    // 页面只展示客户端授权状态和临时 code；真正登录态应由业务服务端确认后再写入本地账号状态。
     [ObservableProperty] private string _wechatLoginStatus = PlatformServices.WechatAuth.IsAvailable ? "微信登录未授权" : "当前平台不可用";
     [ObservableProperty] private string? _wechatAuthCode;
     [ObservableProperty]
@@ -55,6 +56,7 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanWechatLogin))]
     private async Task WechatLoginAsync()
     {
+        // RelayCommand 会根据 IsWechatLoginBusy 自动刷新按钮可用状态，避免重复唤起微信。
         IsWechatLoginBusy = true;
         WechatAuthCode = null;
         WechatLoginStatus = "正在唤起微信...";
@@ -65,6 +67,7 @@ public partial class MainViewModel : ViewModelBase
             if (result.IsSuccess)
             {
                 WechatAuthCode = result.Code;
+                // 这里先直接显示 code，便于真机联调；接入服务端后应把 code 发送给后端换取用户信息。
                 WechatLoginStatus = $"微信授权成功，code: {result.Code}";
                 return;
             }

@@ -13,14 +13,17 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <!-- Release 默认输出单个 APK，便于分发给测试设备和第三方渠道。 -->
         <AndroidPackageFormat>apk</AndroidPackageFormat>
         <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
         <DebugSymbols>false</DebugSymbols>
         <DebugType>none</DebugType>
+        <!-- keystore 放在仓库根目录，本项目文件位于 Todooo/Todooo.Android，所以相对路径需要向上两级。 -->
         <DOGSHOP_ANDROID_KEYSTORE Condition="'$(DOGSHOP_ANDROID_KEYSTORE)' == ''">..\..\mds_dog_unity.keystore</DOGSHOP_ANDROID_KEYSTORE>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)' == 'Release' and Exists('$(DOGSHOP_ANDROID_KEYSTORE)') and '$(DOGSHOP_ANDROID_KEY_ALIAS)' != '' and '$(DOGSHOP_ANDROID_STORE_PASS)' != '' and '$(DOGSHOP_ANDROID_KEY_PASS)' != ''">
+    <PropertyGroup Condition="'$(Configuration)' == 'Release' and Exists('$(DOGSHOP_ANDROID_KEYSTORE)')">
+        <!-- 生产环境建议通过 CI/环境变量注入签名密码，避免把正式密钥信息提交到仓库。 -->
         <AndroidKeyStore>true</AndroidKeyStore>
         <AndroidSigningKeyStore>$(DOGSHOP_ANDROID_KEYSTORE)</AndroidSigningKeyStore>
         <AndroidSigningKeyAlias>dog</AndroidSigningKeyAlias>
@@ -37,8 +40,9 @@
     <ItemGroup>
         <PackageReference Include="Avalonia.Android" Version="12.0.3"/>
         <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.15"/>
-        <!-- AndroidMavenLibrary does not resolve Gradle's dynamic '+' version syntax. -->
+        <!-- .NET Android 的 AndroidMavenLibrary 不解析 Gradle 的动态版本 "+"，这里固定到 Maven Central 当前可下载版本。 -->
         <AndroidMavenLibrary Include="com.tencent.mm.opensdk:wechat-sdk-android" Version="6.8.34" Bind="true" />
+        <!-- 微信 AAR 中部分 Java 成员会生成重复 C# 名称，Metadata.xml 用于修正绑定命名冲突。 -->
         <TransformFile Include="Transforms\Metadata.xml" />
     </ItemGroup>
 
