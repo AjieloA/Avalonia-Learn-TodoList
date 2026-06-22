@@ -1,7 +1,9 @@
-﻿using Android.App;
+using Android.App;
 using Android.Content.PM;
+using Android.OS;
 using Avalonia;
 using Avalonia.Android;
+using Todooo.Services;
 
 namespace Todooo.Android;
 
@@ -13,4 +15,9 @@ namespace Todooo.Android;
     ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.UiMode)]
 public class MainActivity : AvaloniaMainActivity
 {
+    protected override void OnCreate(Bundle? savedInstanceState)
+    {
+        PlatformServices.WechatAuth = new WechatAuthService(this);
+        base.OnCreate(savedInstanceState);
+    }
 }

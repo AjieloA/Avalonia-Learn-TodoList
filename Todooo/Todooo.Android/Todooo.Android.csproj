@@ -4,11 +4,28 @@
         <TargetFramework>net10.0-android</TargetFramework>
         <SupportedOSPlatformVersion>23</SupportedOSPlatformVersion>
         <Nullable>enable</Nullable>
-        <ApplicationId>com.CompanyName.Todooo</ApplicationId>
+        <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+        <ApplicationId>com.mds.dogshop</ApplicationId>
         <ApplicationVersion>1</ApplicationVersion>
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <AndroidPackageFormat>apk</AndroidPackageFormat>
         <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <AndroidPackageFormat>apk</AndroidPackageFormat>
+        <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>none</DebugType>
+        <DOGSHOP_ANDROID_KEYSTORE Condition="'$(DOGSHOP_ANDROID_KEYSTORE)' == ''">..\..\mds_dog_unity.keystore</DOGSHOP_ANDROID_KEYSTORE>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release' and Exists('$(DOGSHOP_ANDROID_KEYSTORE)') and '$(DOGSHOP_ANDROID_KEY_ALIAS)' != '' and '$(DOGSHOP_ANDROID_STORE_PASS)' != '' and '$(DOGSHOP_ANDROID_KEY_PASS)' != ''">
+        <AndroidKeyStore>true</AndroidKeyStore>
+        <AndroidSigningKeyStore>$(DOGSHOP_ANDROID_KEYSTORE)</AndroidSigningKeyStore>
+        <AndroidSigningKeyAlias>dog</AndroidSigningKeyAlias>
+        <AndroidSigningStorePass>mds@0626</AndroidSigningStorePass>
+        <AndroidSigningKeyPass>mds@0626</AndroidSigningKeyPass>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,8 +35,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia.Android"/>
-        <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen"/>
+        <PackageReference Include="Avalonia.Android" Version="12.0.3"/>
+        <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.15"/>
+        <!-- AndroidMavenLibrary does not resolve Gradle's dynamic '+' version syntax. -->
+        <AndroidMavenLibrary Include="com.tencent.mm.opensdk:wechat-sdk-android" Version="6.8.34" Bind="true" />
+        <TransformFile Include="Transforms\Metadata.xml" />
     </ItemGroup>
 
     <ItemGroup>

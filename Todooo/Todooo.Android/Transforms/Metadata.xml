@@ -1,0 +1,4 @@
+<metadata>
+  <attr path="/api/package[@name='com.tencent.mm.opensdk.modelbase']/class[@name='BaseResp']/field[@name='errCode']" name="managedName">ErrorCode</attr>
+  <attr path="/api/package[@name='com.tencent.mm.opensdk.modelmsg']/class[@name='WXMediaMessage']/field[@name='mediaObject']" name="managedName">MessageMediaObject</attr>
+</metadata>

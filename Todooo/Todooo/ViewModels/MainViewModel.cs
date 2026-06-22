@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Todooo.Services;
 
 namespace Todooo.ViewModels;
 
@@ -10,6 +13,11 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty] private string _mainTitleTxt = "Todoooo";
     public ObservableCollection<TodoListItemViewModel>? TodoListItem { get; } = new();
     [ObservableProperty] private TodoListItemViewModel? _selectTodoListItem;
+    [ObservableProperty] private string _wechatLoginStatus = PlatformServices.WechatAuth.IsAvailable ? "微信登录未授权" : "当前平台不可用";
+    [ObservableProperty] private string? _wechatAuthCode;
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(WechatLoginCommand))]
+    private bool _isWechatLoginBusy;
 
     private Dictionary<int, string> imgDic = new Dictionary<int, string>()
     {
@@ -28,7 +36,7 @@ public partial class MainViewModel : ViewModelBase
         for (int i = 0; i < 100000; i++)
         {
             var _idx = _random.Next(1, 8);
-            if (!imgDic.TryGetValue(_idx, out string _url))
+            if (!imgDic.TryGetValue(_idx, out var _url))
                 _url = "https://picture-new.88dog.com/avatar.png";
             TodoListItem?.Add(new TodoListItemViewModel()
             {
@@ -36,6 +44,40 @@ public partial class MainViewModel : ViewModelBase
                 Description = $"Description - - {i}",
                 ImageUrl = _url
             });
+        }
+    }
+
+    private bool CanWechatLogin()
+    {
+        return !IsWechatLoginBusy;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanWechatLogin))]
+    private async Task WechatLoginAsync()
+    {
+        IsWechatLoginBusy = true;
+        WechatAuthCode = null;
+        WechatLoginStatus = "正在唤起微信...";
+
+        try
+        {
+            var result = await PlatformServices.WechatAuth.LoginAsync();
+            if (result.IsSuccess)
+            {
+                WechatAuthCode = result.Code;
+                WechatLoginStatus = $"微信授权成功，code: {result.Code}";
+                return;
+            }
+
+            WechatLoginStatus = $"微信授权失败({result.ErrorCode}): {result.ErrorMessage}";
+        }
+        catch (Exception ex)
+        {
+            WechatLoginStatus = $"微信授权异常: {ex.Message}";
+        }
+        finally
+        {
+            IsWechatLoginBusy = false;
         }
     }
 }
